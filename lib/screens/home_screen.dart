@@ -52,18 +52,19 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Text(
                 'Yuhuu ,Your work Is ',
-                style: TextStyle(color: Colors.white, fontSize: 32),
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 32),
               ),
               Row(
                 children: [
                   Text(
                     'almost done ! ',
-                    style: TextStyle(color: Colors.white, fontSize: 32),
+                    style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 32),
                   ),
         
                   SvgPicture.asset('assets/hand.svg'),
                 ],
               ),
+              SizedBox(height: 16,),
               Text('My Tasks', style: Theme.of(context).textTheme.displayMedium),
               SizedBox(height: 16),
               Expanded(

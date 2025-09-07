@@ -13,8 +13,9 @@ class TasksWidget extends StatelessWidget {
         width: double.infinity,
 
         decoration: BoxDecoration(
-          color: const Color(0xff282828),
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(20),
+          border: Border.all(),
         ),
         child: ListTile(
           leading: Checkbox(
@@ -32,7 +33,7 @@ class TasksWidget extends StatelessWidget {
           title: Text(
             task.taskName,
             style: TextStyle(
-              color: task.isDone ? Color(0xffA0A0A0) : Colors.white,
+              color: task.isDone ? Color(0xffA0A0A0) :Theme.of(context).textTheme.displayMedium!.color,
               decoration:
                   task.isDone
                       ? TextDecoration.lineThrough

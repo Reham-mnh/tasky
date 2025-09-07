@@ -28,7 +28,7 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
         colorFilter: ColorFilter.mode(
           currentIndex == navbar.index
               ? const Color(0xff15B86C)
-              : Colors.white,
+              :Theme.of(context).iconTheme.color!,
           BlendMode.srcIn,
         ),
       ),
@@ -41,7 +41,7 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
     return Scaffold(body: widgets[currentIndex],
    bottomNavigationBar:  BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-      backgroundColor: Color(0xff181818),
+     
       onTap: (value) {
         setState(() {
           currentIndex = value;

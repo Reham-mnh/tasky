@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:tasky/app_color/app_color_light.dart';
 
-ThemeData getThemeDataLight(){
+ThemeData getThemeDataLight() {
   return ThemeData(
+    cardColor: Colors.white,
+    primaryColor: Colors.white,
     iconTheme: IconThemeData(color: AppColorLight.fontColor),
     appBarTheme: AppBarTheme(
       backgroundColor: AppColorLight.appColor,
+      iconTheme: IconThemeData(color: AppColorLight.fontColor),
       titleTextStyle: TextStyle(
         color: AppColorLight.fontColor,
         fontSize: 20,
@@ -55,4 +58,5 @@ ThemeData getThemeDataLight(){
       selectedItemColor: AppColorLight.mainColor,
       unselectedItemColor: Color(0xffC6C6C6),
     ),
-  );}
+  );
+}

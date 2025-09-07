@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasky/database/app_database.dart';
 import 'package:tasky/screens/welcome_screen.dart';
+import 'package:tasky/them_data/theme_data_dark.dart';
+import 'package:tasky/them_data/theme_data_light.dart';
 import 'package:tasky/widgets/bottom_nav_bar_widget.dart';
 
 void main() async{
@@ -31,58 +33,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        iconTheme: IconThemeData(
-          color: Colors.white
-        ),
-        appBarTheme: AppBarTheme(
-          backgroundColor: Color(0xff181818),
-          titleTextStyle: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w400),
-          foregroundColor: Colors.white
-        ),
-        scaffoldBackgroundColor: Color(0xff181818),
-        textTheme: TextTheme(
-          displayLarge: TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: 28,
-            letterSpacing: 0.5,
-            color: Colors.white,
-          ),
-          displayMedium: TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: 16,
-            color: Colors.white,
-          ),
-          displaySmall: TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: 14,
-            color: Color(0xffC6C6C6),
-          ),
-          labelLarge: TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: 20,
-            letterSpacing: 0.5,
-            color: Colors.white,
-          )
-        ),
-
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xff15B86C),
-            foregroundColor: Colors.white,
-            textStyle: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
-          ),
-        ),
-        floatingActionButtonTheme: FloatingActionButtonThemeData(
-          backgroundColor: Color(0xff15B86C),
-          foregroundColor: Colors.white,
-        ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          backgroundColor: Color(0xff181818),
-          selectedItemColor: Color(0xff15B86C),
-          unselectedItemColor: Color(0xffC6C6C6),
-        ),
-      ),
+      theme: getThemeDataDark(),
 
       home:(widget.userName==null)? WelcomeScreen():BottomNavBarWidget(),
     );

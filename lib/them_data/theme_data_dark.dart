@@ -3,9 +3,11 @@ import 'package:tasky/app_color/app_color_dark.dart';
 
 ThemeData getThemeDataDark() {
   return ThemeData(
+    cardColor: Color(0xff282828),
     iconTheme: IconThemeData(color: AppColorDark.fontColor),
     appBarTheme: AppBarTheme(
       backgroundColor: AppColorDark.appColor,
+      
       titleTextStyle: TextStyle(
         color: AppColorDark.fontColor,
         fontSize: 20,

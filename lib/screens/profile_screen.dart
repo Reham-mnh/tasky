@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -40,9 +41,21 @@ class ProfileScreen extends StatelessWidget {
                   Text(
                     'Profile info',
                     style: Theme.of(context).textTheme.labelLarge,
+
                   ),
                 ],
+              
               ),
+              Switch(
+  value: AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark,
+  onChanged: (isDark) {
+    if (isDark) {
+      AdaptiveTheme.of(context).setDark();
+    } else {
+      AdaptiveTheme.of(context).setLight();
+    }
+  },
+),
             ],
           ),
         ),

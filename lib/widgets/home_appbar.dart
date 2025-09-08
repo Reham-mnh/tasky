@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeAppbar extends StatefulWidget implements PreferredSizeWidget {
-  HomeAppbar({super.key});
+  const HomeAppbar({super.key});
 
   @override
   State<HomeAppbar> createState() => _HomeAppbarState();

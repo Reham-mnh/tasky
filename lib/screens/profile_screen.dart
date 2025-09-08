@@ -1,5 +1,9 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:tasky/app_color/app_color_dark.dart';
+import 'package:tasky/app_color/app_color_light.dart';
+import 'package:tasky/screens/user_details_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -46,16 +50,25 @@ class ProfileScreen extends StatelessWidget {
                 ],
               
               ),
-              Switch(
-  value: AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark,
-  onChanged: (isDark) {
-    if (isDark) {
-      AdaptiveTheme.of(context).setDark();
-    } else {
-      AdaptiveTheme.of(context).setLight();
-    }
-  },
-),
+              ListTile(
+                leading: SvgPicture.asset('assets/profiles.svg'),
+                title: Text('User Details'),
+                trailing: IconButton(onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>UserDetailsScreen()));
+                }, icon: Icon(Icons.arrow_forward)),
+              )
+//               Switch(
+//                 activeColor: AppColorDark.mainColor,
+//                 thumbColor: WidgetStatePropertyAll(AppColorLight.appColor),
+//   value: AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark,
+//   onChanged: (isDark) {
+//     if (isDark) {
+//       AdaptiveTheme.of(context).setDark();
+//     } else {
+//       AdaptiveTheme.of(context).setLight();
+//     }
+//   },
+// ),
             ],
           ),
         ),

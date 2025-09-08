@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tasky/app_color/app_color_dark.dart';
 import 'package:tasky/app_color/app_color_light.dart';
 
 ThemeData getThemeDataLight() {
@@ -41,6 +42,8 @@ ThemeData getThemeDataLight() {
         color: AppColorLight.fontColor,
       ),
     ),
+
+    
 
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(

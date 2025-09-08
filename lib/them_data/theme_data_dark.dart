@@ -40,6 +40,10 @@ ThemeData getThemeDataDark() {
         color: AppColorDark.fontColor,
       ),
     ),
+    switchTheme: SwitchThemeData(
+      thumbColor: WidgetStateProperty.all(AppColorDark.fontColor),
+      
+    ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(

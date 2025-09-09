@@ -37,7 +37,7 @@ class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
       ),
       
       body: Padding(
-        padding: const EdgeInsets.only(top: 26.0),
+        padding: const EdgeInsets.symmetric(vertical: 26.0,horizontal: 16),
         child: ListView.builder(
           itemCount: completedTaks.length,
           itemBuilder: (BuildContext context, int index) {

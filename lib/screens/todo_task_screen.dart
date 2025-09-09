@@ -35,12 +35,9 @@ class _TodoTaskScreenState extends State<TodoTaskScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('To DO Tasks'),
-          leading: BackButton(),
-        ),
+        appBar: AppBar(title: Text('To DO Tasks'), leading: BackButton()),
         body: Padding(
-          padding: const EdgeInsets.only(top: 26.0),
+          padding: const EdgeInsets.symmetric(vertical: 26.0, horizontal: 16),
           child: ListView.builder(
             itemCount: toDoList.length,
             itemBuilder: (BuildContext context, int index) {

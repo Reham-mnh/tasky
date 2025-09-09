@@ -9,7 +9,6 @@ class HomeAppbar extends StatefulWidget implements PreferredSizeWidget {
   State<HomeAppbar> createState() => _HomeAppbarState();
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => Size.fromHeight(100);
 }
 
@@ -22,11 +21,14 @@ class _HomeAppbarState extends State<HomeAppbar> {
   }
 
   String userName = '';
+  String quote='';
 
   getUserName() async {
     final preferences = await SharedPreferences.getInstance();
     setState(() {
       userName = preferences.getString('userName') ?? '';
+      quote =preferences.getString('quote')??'';
+
     });
   }
 
@@ -48,21 +50,25 @@ class _HomeAppbarState extends State<HomeAppbar> {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Good Evening ,$userName',
-                  style: Theme.of(context).textTheme.displayMedium,
-                ),
-
-                Text(
-                  "One task at a time.One step \n closer.",
-                  style: Theme.of(context).textTheme.displaySmall,
-                ),
-              ],
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Good Evening ,$userName',
+                    style: Theme.of(context).textTheme.displayMedium,
+                  ),
+            
+                  Text(
+                    quote,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                ],
+              ),
             ),
           ),
           Container(

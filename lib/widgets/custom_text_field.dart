@@ -27,7 +27,7 @@ class CustomTextField extends StatelessWidget {
         ),
         SizedBox(height: 8),
          TextField(
-          style: const TextStyle(color: Colors.white),
+          style:Theme.of(context).textTheme.displayMedium,
           controller: controller,
             maxLines: maxLines,
             decoration: InputDecoration(

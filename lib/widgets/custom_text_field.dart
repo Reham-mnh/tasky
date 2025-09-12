@@ -26,7 +26,7 @@ class CustomTextField extends StatelessWidget {
           ).textTheme.displayLarge?.copyWith(fontSize: 16),
         ),
         SizedBox(height: 8),
-         TextField(
+         TextFormField(
           style:Theme.of(context).textTheme.displayMedium,
           controller: controller,
             maxLines: maxLines,

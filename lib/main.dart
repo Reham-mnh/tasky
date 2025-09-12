@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasky/database/app_database.dart';
 import 'package:tasky/screens/welcome_screen.dart';
@@ -9,6 +10,8 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  await Hive.openBox('tasks');
   await AppDatabase().database;
   final currentMode = await AdaptiveTheme.getThemeMode();
 

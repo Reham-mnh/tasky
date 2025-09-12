@@ -45,6 +45,7 @@ dependencies:
   adaptive_theme: ^3.7.1+2
   image_picker: ^1.2.0
   hive_ce: ^2.12.0
+  hive_ce_flutter: ^2.3.2
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasky/app_color/app_color_dark.dart';
 import 'package:tasky/app_color/app_color_light.dart';
@@ -16,6 +19,19 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   String userName = '';
   String quote = '';
+  File? image;
+  final imagePicker = ImagePicker();
+  uploadImage() async {
+    var pickedImaged = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (pickedImaged != null) {
+      setState(() {
+        image = File(pickedImaged.path);
+      });
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('User_picture', pickedImaged.path);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -27,6 +43,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() {
       userName = prefs.getString('userName') ?? '';
       quote = prefs.getString('quote') ?? '';
+      var path = prefs.getString('User_picture');
+      if (path != null) {
+        image = File(path);
+      }
     });
   }
 
@@ -43,23 +63,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 alignment: Alignment.bottomRight,
                 children: [
                   CircleAvatar(
-                    radius: 70,
-                    backgroundImage: AssetImage('assets/adam.jpg'),
+                    radius: 85,
+                    backgroundImage:
+                        image == null
+                            ? AssetImage("assets/profilePicture.png")
+                            : FileImage(image!),
                   ),
                   Container(
-                    height: 40,
-                    width: 35,
+                    width: 34,
+                    height: 34,
                     decoration: BoxDecoration(
-                      color: Colors.blueGrey,
                       shape: BoxShape.circle,
+                      color: Theme.of(context).cardColor,
                     ),
 
-                    child: Center(child: Icon(Icons.camera_alt)),
+                    child: IconButton(
+                      onPressed: uploadImage,
+                      icon: SvgPicture.asset(
+                        'assets/camera-01.svg',
+                        colorFilter: ColorFilter.mode(
+                          Theme.of(context).iconTheme.color!,
+                          BlendMode.srcIn,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
               Text(userName, style: Theme.of(context).textTheme.displayLarge),
-              Text(quote, style: Theme.of(context).textTheme.displaySmall),
+              Text(quote, style: Theme.of(context).textTheme.labelMedium),
               SizedBox(height: 20),
 
               Row(
@@ -83,13 +115,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: Theme.of(context).textTheme.displayMedium,
                 ),
                 trailing: IconButton(
-                  onPressed: ()async {
-                   await Navigator.push(
+                  onPressed: () async {
+                    await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => UserDetailsScreen(),
                       ),
-                      
                     );
                     getUserData();
                   },

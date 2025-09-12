@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tasky/database/app_database.dart';
@@ -15,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<TaskModel> lists = [];
- 
+  List<TaskModel> completedTask = [];
 
   @override
   void initState() {
@@ -25,9 +26,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void getData() async {
-    final reslist = await AppDatabase().getTasks();
+    final resultList = await AppDatabase().getTasks();
+    final completed = await AppDatabase().getSelectedTasks();
     setState(() {
-      lists = reslist;
+      lists = resultList;
+      completedTask = completed;
     });
   }
 
@@ -37,12 +40,10 @@ class _HomeScreenState extends State<HomeScreen> {
     getData();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: HomeAppbar( ),
+      appBar: HomeAppbar(),
 
       body: SafeArea(
         child: Padding(
@@ -52,20 +53,45 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Text(
                 'Yuhuu ,Your work Is ',
-                style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 32),
+                style: Theme.of(
+                  context,
+                ).textTheme.displayLarge!.copyWith(fontSize: 32),
               ),
               Row(
                 children: [
                   Text(
                     'almost done ! ',
-                    style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 32),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.displayLarge!.copyWith(fontSize: 32),
                   ),
-        
+
                   SvgPicture.asset('assets/hand.svg'),
                 ],
               ),
-              SizedBox(height: 16,),
-              Text('My Tasks', style: Theme.of(context).textTheme.displayMedium),
+              SizedBox(height: 16),
+              Container(
+                width: double.infinity,
+                height: 72,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: ListTile(
+                  title: Text('Achieved Tasks',style: Theme.of(context).textTheme.displayMedium,),
+                  subtitle:  Text(
+                '${completedTask.length} Out of ${lists.length} Done',
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+                ),
+              ),
+             
+              SizedBox(height: 16),
+
+              Text(
+                'My Tasks',
+                style: Theme.of(context).textTheme.displayMedium,
+              ),
               SizedBox(height: 16),
               Expanded(
                 child: ListView.builder(
@@ -80,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ),
-        
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -88,7 +114,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () async {
                       final result = await Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => AddTaskScreen()),
+                        MaterialPageRoute(
+                          builder: (context) => AddTaskScreen(),
+                        ),
                       );
                       if (result == true) {
                         getData();
@@ -103,7 +131,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tasky/app_color/app_color_light.dart';
 import 'package:tasky/models/task.dart';
 
 class TasksWidget extends StatelessWidget {
@@ -15,7 +16,9 @@ class TasksWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(),
+          border:Theme.of(context).brightness==Brightness.light? Border.all(
+           color: AppColorLight.borderColor
+          ):null,
         ),
         child: ListTile(
           leading: Checkbox(
@@ -42,7 +45,7 @@ class TasksWidget extends StatelessWidget {
               decorationThickness: 2,
             ),
           ),
-          subtitle: Text(task.description),
+          subtitle: Text(task.description,style: Theme.of(context).textTheme.displaySmall,),
           trailing: Icon(Icons.more_vert),
         ),
       ),

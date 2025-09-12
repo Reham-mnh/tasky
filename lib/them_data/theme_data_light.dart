@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:tasky/app_color/app_color_dark.dart';
 import 'package:tasky/app_color/app_color_light.dart';
 
 ThemeData getThemeDataLight() {
   return ThemeData(
     cardColor: Colors.white,
+
     primaryColor: Colors.white,
+
     iconTheme: IconThemeData(color: AppColorLight.fontColor),
     appBarTheme: AppBarTheme(
-      backgroundColor: AppColorLight.appColor,
+      backgroundColor: AppColorLight.backgroundColor,
       iconTheme: IconThemeData(color: AppColorLight.fontColor),
       titleTextStyle: TextStyle(
         color: AppColorLight.fontColor,
@@ -17,7 +18,8 @@ ThemeData getThemeDataLight() {
       ),
       foregroundColor: AppColorLight.fontColor,
     ),
-    scaffoldBackgroundColor: AppColorLight.appColor,
+    scaffoldBackgroundColor: AppColorLight.backgroundColor,
+
     textTheme: TextTheme(
       displayLarge: TextStyle(
         fontWeight: FontWeight.w400,
@@ -25,22 +27,31 @@ ThemeData getThemeDataLight() {
         letterSpacing: 0.5,
         color: AppColorLight.fontColor,
       ),
+
       displayMedium: TextStyle(
         fontWeight: FontWeight.w400,
         fontSize: 16,
         color: AppColorLight.fontColor,
       ),
+
       displaySmall: TextStyle(
         fontWeight: FontWeight.w400,
         fontSize: 14,
-        color: Color(0xffC6C6C6),
+        color: AppColorLight.fontColor2,
       ),
+
       labelLarge: TextStyle(
         fontWeight: FontWeight.w400,
         fontSize: 20,
         letterSpacing: 0.5,
         color: AppColorLight.fontColor,
       ),
+
+      labelMedium: TextStyle(
+        fontWeight: FontWeight.w400,
+        fontSize :14,
+        color: AppColorLight.fontColor2
+      )
     ),
 
     
@@ -57,7 +68,7 @@ ThemeData getThemeDataLight() {
       foregroundColor: Colors.white,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: AppColorLight.appColor,
+      backgroundColor: AppColorLight.backgroundColor,
       selectedItemColor: AppColorLight.mainColor,
       unselectedItemColor: Color(0xffC6C6C6),
     ),

@@ -1,12 +1,13 @@
 import 'dart:io';
 
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasky/app_color/app_color_dark.dart';
 import 'package:tasky/app_color/app_color_light.dart';
+import 'package:tasky/controller/cubit/theme/theme_cubit.dart';
 import 'package:tasky/screens/user_details_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -103,6 +104,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
               ListTile(
+                onTap: () async {
+                  final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserDetailsScreen(),
+                    ),
+                  );
+
+                  if (result == true) {
+                    getUserData();
+                  }
+                },
                 leading: SvgPicture.asset(
                   'assets/profiles.svg',
                   colorFilter: ColorFilter.mode(
@@ -114,18 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   'User Details',
                   style: Theme.of(context).textTheme.displayMedium,
                 ),
-                trailing: IconButton(
-                  onPressed: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UserDetailsScreen(),
-                      ),
-                    );
-                    getUserData();
-                  },
-                  icon: Icon(Icons.arrow_forward),
-                ),
+                trailing: Icon(Icons.arrow_forward),
               ),
               Divider(indent: 20, endIndent: 20),
               ListTile(
@@ -140,17 +142,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   'Dark mode',
                   style: Theme.of(context).textTheme.displayMedium,
                 ),
-                trailing: Switch(
-                  activeColor: AppColorDark.mainColor,
-                  value:
-                      AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark,
-                  thumbColor: WidgetStatePropertyAll(AppColorLight.appColor),
-                  onChanged: (value) {
-                    if (value) {
-                      AdaptiveTheme.of(context).setDark();
-                    } else {
-                      AdaptiveTheme.of(context).setLight();
-                    }
+                trailing: BlocBuilder<ThemeCubit, ThemeMode>(
+                  builder: (context, themeMode) {
+                    return Switch(
+                      activeColor: AppColorDark.mainColor,
+                      value: themeMode == ThemeMode.dark,
+                      thumbColor: WidgetStatePropertyAll(
+                        AppColorLight.appColor,
+                      ),
+                      onChanged: (value) {
+                        context.read<ThemeCubit>().selectedTheme();
+                      },
+                    );
                   },
                 ),
               ),

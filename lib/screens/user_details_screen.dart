@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tasky/screens/profile_screen.dart';
 import 'package:tasky/widgets/custom_text_field.dart';
 
 class UserDetailsScreen extends StatelessWidget {
@@ -42,14 +41,9 @@ class UserDetailsScreen extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton.icon(
                   onPressed: () {
-                    // SharedPreferences prefs=await SharedPreferences.getInstance();
-                    // prefs.setString('userName', userNameController.text);
-                    // prefs.setString('quote', userquoteController.text);
+                    FocusScope.of(context).unfocus();
                     setUserDetails();
-                    Navigator.pop(
-                      context,
-                      MaterialPageRoute(builder: (context) => ProfileScreen()),
-                    );
+                    Navigator.pop(context, true);
                   },
                   label: Text('Change user details'),
                 ),

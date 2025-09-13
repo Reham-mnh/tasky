@@ -1,50 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:tasky/database/app_database.dart';
-import 'package:tasky/models/task.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tasky/controller/cubit/task_cubit.dart';
 import 'package:tasky/widgets/tasks_widget.dart';
 
-class CompletedTaskScreen extends StatefulWidget {
+class CompletedTaskScreen extends StatelessWidget {
   const CompletedTaskScreen({super.key});
 
   @override
-  State<CompletedTaskScreen> createState() => _CompletedTaskScreenState();
-}
-
-class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
-  List<TaskModel> completedTaks = [];
-  @override
-  void initState() {
-    super.initState();
-    getData();
-  }
- isSelected(TaskModel model) async {
-    final updatedTask = model.copyWith(isDone: !model.isDone);
-    await AppDatabase().updateTask(updatedTask);
-    getData();
-  }
-  void getData() async {
-    final completedList = await AppDatabase().getSelectedTasks();
-    setState(() {
-      completedTaks = completedList;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Completed Tasks'),
-      leading: BackButton(),
-      ),
-      
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 26.0,horizontal: 16),
-        child: ListView.builder(
-          itemCount: completedTaks.length,
-          itemBuilder: (BuildContext context, int index) {
-            return TasksWidget(task: completedTaks[index], onToggle: () {isSelected(completedTaks[index]);});
-          },
-        ),
-      ),
+    return BlocBuilder<TaskCubit, TaskState>(
+      builder: (context, state) {
+        final taskCubit = context.read<TaskCubit>();
+        final completedTasks =
+            taskCubit.tasksMap.entries
+                .where((entry) => entry.value.isDone)
+                .toList();
+        return Scaffold(
+          appBar: AppBar(title: Text('Completed Tasks'), leading: BackButton()),
+
+          body: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 26.0, horizontal: 16),
+            child: ListView.builder(
+              itemCount: completedTasks.length,
+              itemBuilder: (BuildContext context, int index) {
+                final task = completedTasks[index].value;
+                final key = completedTasks[index].key;
+                return TasksWidget(
+                  task: task,
+
+                  onToggle: () {
+                    context.read<TaskCubit>().selectTask(key);
+                  },
+                );
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }

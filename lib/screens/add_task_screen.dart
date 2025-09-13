@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tasky/controller/cubit/task_cubit.dart';
 
-import 'package:tasky/database/app_database.dart';
 import 'package:tasky/models/task.dart';
 import 'package:tasky/widgets/custom_text_field.dart';
 
@@ -20,86 +21,77 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     final descriptionController = TextEditingController();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('New Task'),
-       
-      ),
+      appBar: AppBar(title: Text('New Task')),
 
-      body:SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            children: [
+              SizedBox(height: 26),
+              CustomTextField(
+                controller: taskNameController,
+                title: 'Task Name',
+                hintText: 'Finish UI design for login screen',
+              ),
+              SizedBox(height: 20),
+              CustomTextField(
+                controller: descriptionController,
+                title: 'Task Description',
+                hintText:
+                    'Finish onboarding UI and hand off to devs by Thursday.',
+                maxLines: 5,
+              ),
+              SizedBox(height: 20),
+              Row(
                 children: [
-                  SizedBox(height: 26),
-                  CustomTextField(
-                    controller: taskNameController,
-                    title: 'Task Name',
-                    hintText: 'Finish UI design for login screen',
-                  ),
-                  SizedBox(height: 20),
-                  CustomTextField(
-                    controller: descriptionController,
-                    title: 'Task Description',
-                    hintText:
-                        'Finish onboarding UI and hand off to devs by Thursday.',
-                    maxLines: 5,
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Text(
-                        'High Priority',
-                        style: Theme.of(
-                          context,
-                        ).textTheme.displayLarge?.copyWith(fontSize: 16),
-                      ),
-                      Spacer(),
-                      Switch(
-                        value: isSelected,
-                        onChanged: (value) {
-                          setState(() {
-                            isSelected = value;
-                          });
-                        },
-                        activeColor: Color(0xff15B86C),
-                        thumbColor: WidgetStateProperty.all(Colors.white),
-                      ),
-                    ],
+                  Text(
+                    'High Priority',
+                    style: Theme.of(
+                      context,
+                    ).textTheme.displayLarge?.copyWith(fontSize: 16),
                   ),
                   Spacer(),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: () async {
-                        await AppDatabase().insertTask(
-                          TaskModel(
-                            taskName: taskNameController.text,
-                            description: descriptionController.text,
-                            isDone: false,
-                          ),
-                        );
-                        
-                        Navigator.pop(
-                          context,
-                         true,
-                        );
-                     
-                      },
-                      label: Text('Add Task'),
-                      icon: Icon(Icons.add),
-                      style: ButtonStyle(
-                        maximumSize: WidgetStatePropertyAll(
-                          Size(double.infinity, 56),
-                        ),
-                      ),
-                    ),
+                  Switch(
+                    value: isSelected,
+                    onChanged: (value) {
+                      setState(() {
+                        isSelected = value;
+                      });
+                    },
+                    activeColor: Color(0xff15B86C),
+                    thumbColor: WidgetStateProperty.all(Colors.white),
                   ),
                 ],
               ),
-            ),
-      )
-       
-      );
-   
+              Spacer(),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: () async {
+                    context.read<TaskCubit>().addTask(
+                      TaskModel(
+                        taskName: taskNameController.text,
+                        description: descriptionController.text,
+                        isDone: false,
+                      ),
+                    );
+
+                    Navigator.pop(context, true);
+                  },
+                  label: Text('Add Task'),
+                  icon: Icon(Icons.add),
+                  style: ButtonStyle(
+                    maximumSize: WidgetStatePropertyAll(
+                      Size(double.infinity, 56),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
